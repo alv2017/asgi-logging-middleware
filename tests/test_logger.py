@@ -11,7 +11,7 @@ from asgiref.typing import ASGIReceiveCallable as Receive
 from asgiref.typing import ASGISendCallable as Send
 from asgiref.typing import Scope
 
-from asgi_logger import AccessLoggerMiddleware
+from asgi_logging_middleware import AccessLoggerMiddleware
 
 
 class Match:

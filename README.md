@@ -1,27 +1,42 @@
 <h1 align="center">
-    <strong>asgi-logger</strong>
+    <strong>asgi-logging-middleware</strong>
 </h1>
+
 <p align="center">
-    <a href="https://github.com/Kludex/asgi-logger" target="_blank">
-        <img src="https://img.shields.io/github/last-commit/Kludex/asgi-logger" alt="Latest Commit">
+    <a href="https://github.com/alv2017/asgi-logging-middleware" target="_blank">
+        <!-- Last commit -->
+        <img src="https://img.shields.io/github/last-commit/alv2017/asgi-logging-middleware" alt="Latest Commit">
+        <!-- GitHub Actions build status -->
+        <img src="https://img.shields.io/github/actions/workflow/status/alv2017/asgi-logging-middleware/ci.yml?branch=main" alt="Build Status">
+        <!-- Codecov coverage -->
+        <img src="https://img.shields.io/codecov/c/github/alv2017/asgi-logging-middleware" alt="Code Coverage">
     </a>
-        <img src="https://img.shields.io/github/workflow/status/Kludex/asgi-logger/Test">
-        <img src="https://img.shields.io/codecov/c/github/Kludex/asgi-logger">
-    <br />
-    <a href="https://pypi.org/project/asgi-logger" target="_blank">
-        <img src="https://img.shields.io/pypi/v/asgi-logger" alt="Package version">
+    <br/>
+    <!-- PyPI version shield: not yet on PyPI :-) 
+    <a href="https://pypi.org/project/asgi-logging-middleware" target="_blank">
+        <img src="https://img.shields.io/pypi/v/asgi-logging-middleware" alt="Package version">
     </a>
-    <img src="https://img.shields.io/pypi/pyversions/asgi-logger">
-    <img src="https://img.shields.io/github/license/Kludex/asgi-logger">
+    <img src="https://img.shields.io/pypi/pyversions/asgi-logging-middleware" alt="Python Version">
+    -->
+    <img src="https://img.shields.io/github/license/alv2017/asgi-logging-middleware">
 </p>
 
-This project was created as an alternative for the current uvicorn logger. But it can also be used with any other ASGI server.
+## Overview
+
+This project was created as a fork of [asgi-logger](https://github.com/Kludex/asgi-logger) project. 
+
+ASGI logging middleware logs HTTP request/response data in a configurable format, similar to how web servers 
+like Nginx or Apache log requests. Initially it was created as an alternative for the uvicorn 
+access logger.
+
+Primarily the middleware is targeted at Starlette and FastAPI applications, but it can be used with any 
+ASGI application.
 
 
 ## Installation
 
 ``` bash
-pip install asgi-logger
+pip install asgi-logging-middleware
 ```
 
 ## Usage
@@ -38,9 +53,10 @@ Below you can see an example with FastAPI, but you can use it with any other ASG
 ```python
 from fastapi import FastAPI
 from fastapi.middleware import Middleware
-from asgi_logger import AccessLoggerMiddleware
+from asgi_logging_middleware import AccessLoggerMiddleware
 
 app = FastAPI(middleware=[Middleware(AccessLoggerMiddleware)])
+
 
 @app.get("/")
 async def home():
@@ -53,7 +69,7 @@ In case you want to add a custom format to the access logs, you can do it using 
 AccessLoggerMiddleware(app, format="%(s)s")
 ```
 
-For now you can verify the possible format values [here](https://github.com/Kludex/asgi-logger/blob/main/asgi_logger/middleware.py).
+For now you can verify the possible format values [here](https://github.com/alv2017/asgi-logging-middleware/blob/main/asgi_logging_middleware/middleware.py).
 The documentation will be available soon.
 
 ## License
