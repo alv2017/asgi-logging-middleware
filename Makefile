@@ -7,8 +7,8 @@ help: ## Show this help
 install:  ## Install package
 	@echo "🏗️ Install package"
 	python -m pip install --upgrade pip
-	python -m pip install --upgrade poetry==1.2.0a2
-	poetry install
+	python -m pip install --upgrade poetry==2.2.1
+	poetry install --no-root --with dev
 
 
 .PHONY: lint
