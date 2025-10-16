@@ -44,7 +44,9 @@ async def invalid_status_code_app(scope: Scope, receive: Receive, send: Send) ->
 @pytest.mark.anyio
 async def test_default_format_200_response(caplog: pytest.LogCaptureFixture) -> None:
     app = AccessLoggerMiddleware(success_app)
-    async with httpx.AsyncClient(app=app, base_url="http://testserver") as client:
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
         res = await client.get("/")
     assert res.status_code == 200
     messages = [record.msg % record.args for record in caplog.records]
@@ -55,7 +57,9 @@ async def test_default_format_200_response(caplog: pytest.LogCaptureFixture) -> 
 @pytest.mark.anyio
 async def test_default_format_500_response(caplog: pytest.LogCaptureFixture) -> None:
     app = AccessLoggerMiddleware(failure_app)
-    async with httpx.AsyncClient(app=app, base_url="http://testserver") as client:
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
         with pytest.raises(RuntimeError):
             await client.get("/")
     messages = [record.msg % record.args for record in caplog.records]
@@ -81,7 +85,9 @@ async def test_logger_argument(caplog: pytest.LogCaptureFixture) -> None:
     custom_logger.addHandler(handler)
 
     app = AccessLoggerMiddleware(success_app, logger=custom_logger)
-    async with httpx.AsyncClient(app=app, base_url="http://testserver") as client:
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
         res = await client.get("/")
     assert res.status_code == 200
     messages = [record.msg % record.args for record in caplog.records]
@@ -92,7 +98,9 @@ async def test_logger_argument(caplog: pytest.LogCaptureFixture) -> None:
 @pytest.mark.anyio
 async def test_invalid_status_code(caplog: pytest.LogCaptureFixture) -> None:
     app = AccessLoggerMiddleware(invalid_status_code_app)
-    async with httpx.AsyncClient(app=app, base_url="http://testserver") as client:
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
         res = await client.get("/")
     assert res.status_code == 700
     messages = [record.msg % record.args for record in caplog.records]
