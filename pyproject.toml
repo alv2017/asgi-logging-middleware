@@ -38,7 +38,6 @@ dev = [
     "pre-commit (>=4.3.0,<5)",
     "pytest==6.2.5",
     "pytest-cov==2.10.1",
-    "uvicorn==0.15.0",
     "httpx==0.20.0",
     "anyio==3.3.4",
     "trio==0.19.0",

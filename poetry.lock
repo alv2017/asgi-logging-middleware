@@ -27,7 +27,7 @@ version = "3.10.0"
 description = "ASGI specs, helper code, and adapters"
 optional = false
 python-versions = ">=3.9"
-groups = ["main", "dev"]
+groups = ["main"]
 files = [
     {file = "asgiref-3.10.0-py3-none-any.whl", hash = "sha256:aef8a81283a34d0ab31630c9b7dfe70c812c95eba78171367ca8745e88124734"},
     {file = "asgiref-3.10.0.tar.gz", hash = "sha256:d89f2d8cd8b56dada7d52fa7dc8075baa08fb836560710d38c292a7a3f78c04e"},
@@ -1222,26 +1222,6 @@ files = [
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
 ]
 markers = {main = "python_version == \"3.10\""}
-
-[[package]]
-name = "uvicorn"
-version = "0.15.0"
-description = "The lightning-fast ASGI server."
-optional = false
-python-versions = "*"
-groups = ["dev"]
-files = [
-    {file = "uvicorn-0.15.0-py3-none-any.whl", hash = "sha256:17f898c64c71a2640514d4089da2689e5db1ce5d4086c2d53699bf99513421c1"},
-    {file = "uvicorn-0.15.0.tar.gz", hash = "sha256:d9a3c0dd1ca86728d3e235182683b4cf94cd53a867c288eaeca80ee781b2caff"},
-]
-
-[package.dependencies]
-asgiref = ">=3.4.0"
-click = ">=7.0"
-h11 = ">=0.8"
-
-[package.extras]
-standard = ["PyYAML (>=5.1)", "colorama (>=0.4) ; sys_platform == \"win32\"", "httptools (==0.2.*)", "python-dotenv (>=0.13)", "uvloop (>=0.14.0,!=0.15.0,!=0.15.1) ; sys_platform != \"win32\" and sys_platform != \"cygwin\" and platform_python_implementation != \"PyPy\"", "watchgod (>=0.6)", "websockets (>=9.1)"]
 
 [[package]]
 name = "virtualenv"
