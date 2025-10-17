@@ -12,12 +12,10 @@
         <img src="https://img.shields.io/codecov/c/github/alv2017/asgi-logging-middleware" alt="Code Coverage">
     </a>
     <br/>
-    <!-- PyPI version shield: not yet on PyPI :-) 
     <a href="https://pypi.org/project/asgi-logging-middleware" target="_blank">
         <img src="https://img.shields.io/pypi/v/asgi-logging-middleware" alt="Package version">
     </a>
     <img src="https://img.shields.io/pypi/pyversions/asgi-logging-middleware" alt="Python Version">
-    -->
     <img src="https://img.shields.io/github/license/alv2017/asgi-logging-middleware">
 </p>
 
