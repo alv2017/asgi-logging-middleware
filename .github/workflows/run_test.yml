@@ -1,0 +1,40 @@
+name: Run Tests
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "asgi_logging_middleware/**"
+      - "tests/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "asgi_logging_middleware/**"
+      - "tests/**"
+
+  workflow_dispatch:
+    inputs:
+      python-version:
+        description: "Select Python version"
+        required: false
+        default: "3.12"
+
+jobs:
+  run-tests:
+    name: "Python ${{ matrix.python-version }} ${{ matrix.os }}"
+    runs-on: "${{ matrix.os }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run Python tests
+        uses: ./.github/actions/lint-and-test
+        with:
+          python-version: ${{ matrix.python-version }}
+          codecov-token: ${{ secrets.CODECOV_TOKEN }}
