@@ -3,8 +3,14 @@ name: Run Tests on Main Branch
 on:
   push:
     branches: ["main"]
+    paths:
+      - "asgi_logging_middleware/**"
+      - "tests/**"
   pull_request:
     branches: ["main"]
+    paths:
+      - "asgi_logging_middleware/**"
+      - "tests/**"
 
   workflow_dispatch:
     inputs:
