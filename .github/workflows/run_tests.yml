@@ -3,9 +3,7 @@ name: Run Tests
 on:
   push:
     branches: ["main"]
-    paths:
-      - "asgi_logging_middleware/**"
-      - "tests/**"
+
   pull_request:
     branches: ["main"]
     paths:
@@ -13,11 +11,7 @@ on:
       - "tests/**"
 
   workflow_dispatch:
-    inputs:
-      python-version:
-        description: "Select Python version"
-        required: false
-        default: "3.12"
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
