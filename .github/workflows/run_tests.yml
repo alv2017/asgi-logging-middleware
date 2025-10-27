@@ -34,6 +34,9 @@ jobs:
         os: [windows-latest, ubuntu-latest, macos-latest]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
       - name: Display context
         run: |
           echo "Workflow: ${{ github.workflow }}"
@@ -43,10 +46,6 @@ jobs:
           echo "Github Head Ref: ${{ github.head_ref }}"
           echo "Github Ref. Name: ${{ github.ref_name }}"
           echo "Github Ref. Type: ${{ github.ref_type }}"
-
-
-      - name: Checkout code
-        uses: actions/checkout@v5
 
       - name: Run Python tests
         uses: ./.github/actions/lint_and_test
