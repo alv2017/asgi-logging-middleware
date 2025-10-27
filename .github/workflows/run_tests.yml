@@ -19,6 +19,10 @@ on:
         required: false
         default: "3.12"
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-tests:
     name: "Python ${{ matrix.python-version }} ${{ matrix.os }}"
