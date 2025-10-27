@@ -2,6 +2,7 @@ name: Run Tests on Non-Main Branches
 
 on:
   push:
+    branches: ["!main"]
 #    paths:
 #      - "asgi_logging_middleware/**"
 #      - "tests/**"
