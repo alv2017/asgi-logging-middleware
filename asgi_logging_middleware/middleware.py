@@ -17,6 +17,8 @@ class AccessInfo(TypedDict, total=False):
     response: ASGISendEvent
     start_time: float
     end_time: float
+    cpu_start: float
+    cpu_end: float
 
 
 class AccessLoggerMiddleware:
@@ -54,13 +56,15 @@ class AccessLoggerMiddleware:
             await send(message)
 
         try:
-            info["start_time"] = time.time()
+            info["start_time"] = time.perf_counter()
+            info["cpu_start"] = time.process_time()
             await self.app(scope, receive, inner_send)
         except Exception as exc:
             info["response"]["status"] = 500
             raise exc
         finally:
-            info["end_time"] = time.time()
+            info["cpu_end"] = time.process_time()
+            info["end_time"] = time.perf_counter()
             self.log(scope, info)
 
     def log(self, scope: HTTPScope, info: AccessInfo) -> None:
@@ -90,6 +94,7 @@ class AccessLogAtoms(dict):
         full_request_line = f"{scope['method']} {full_path} {protocol}"
 
         request_time = info["end_time"] - info["start_time"]
+        cpu_time = info["cpu_end"] - info["cpu_start"]
         client_addr = get_client_addr(scope)
         self.update(
             {
@@ -117,6 +122,7 @@ class AccessLogAtoms(dict):
                 "D": int(request_time * 1_000_000),
                 "L": f"{request_time:.6f}",
                 "p": f"<{os.getpid()}>",
+                "cpu_time": f"{cpu_time:.6f}",
             }
         )
 

@@ -106,3 +106,39 @@ async def test_invalid_status_code(caplog: pytest.LogCaptureFixture) -> None:
     messages = [record.msg % record.args for record in caplog.records]
     assert len(messages) == 1
     assert shlex.split(messages[0]) == [Match(), "-", "GET / HTTP/1.1", "700", "-"]
+
+
+@pytest.mark.anyio
+async def test_cpu_time_logging_success_app(caplog: pytest.LogCaptureFixture) -> None:
+    custom_format = "%(client_addr)s, %(request_line)s, %(status_code)s, %(cpu_time)s"
+    app = AccessLoggerMiddleware(success_app, format=custom_format)
+
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
+        res = await client.get("/")
+        assert res.status_code == 200
+    messages = [record.msg % record.args for record in caplog.records]
+    assert len(messages) == 1
+    parts = messages[0].split(", ")
+    assert len(parts) == 4
+    cpu_time = float(parts[3])
+    assert cpu_time > 0.0
+
+
+@pytest.mark.anyio
+async def test_cpu_time_logging_failure_app(caplog: pytest.LogCaptureFixture) -> None:
+    custom_format = "%(client_addr)s, %(request_line)s, %(status_code)s, %(cpu_time)s"
+    app = AccessLoggerMiddleware(failure_app, format=custom_format)
+    async with httpx.AsyncClient(
+        transport=httpx.ASGITransport(app=app), base_url="http://testserver"
+    ) as client:
+        with pytest.raises(RuntimeError):
+            res = await client.get("/")
+            assert res.status_code == 500
+    messages = [record.msg % record.args for record in caplog.records]
+    assert len(messages) == 1
+    parts = messages[0].split(", ")
+    assert len(parts) == 4
+    cpu_time = float(parts[3])
+    assert cpu_time > 0.0
