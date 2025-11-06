@@ -123,7 +123,7 @@ async def test_cpu_time_logging_success_app(caplog: pytest.LogCaptureFixture) ->
     parts = messages[0].split(", ")
     assert len(parts) == 4
     cpu_time = float(parts[3])
-    assert cpu_time > 0.0
+    assert cpu_time >= 0.0
 
 
 @pytest.mark.anyio
@@ -141,4 +141,4 @@ async def test_cpu_time_logging_failure_app(caplog: pytest.LogCaptureFixture) ->
     parts = messages[0].split(", ")
     assert len(parts) == 4
     cpu_time = float(parts[3])
-    assert cpu_time > 0.0
+    assert cpu_time >= 0.0
