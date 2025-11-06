@@ -54,13 +54,13 @@ class AccessLoggerMiddleware:
             await send(message)
 
         try:
-            info["start_time"] = time.time()
+            info["start_time"] = time.perf_counter()
             await self.app(scope, receive, inner_send)
         except Exception as exc:
             info["response"]["status"] = 500
             raise exc
         finally:
-            info["end_time"] = time.time()
+            info["end_time"] = time.perf_counter()
             self.log(scope, info)
 
     def log(self, scope: HTTPScope, info: AccessInfo) -> None:
